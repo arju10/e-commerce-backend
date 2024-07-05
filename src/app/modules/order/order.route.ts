@@ -5,6 +5,11 @@ import { OrderValidation } from './order.validation';
 
 const router = express.Router();
 
-router.post('/',validateRequest(OrderValidation.createOrderZodSchema), OrderControllers.createOrder);
+router.post(
+  '/',
+  validateRequest(OrderValidation.createOrderZodSchema),
+  OrderControllers.createOrder,
+);
+router.get('/', OrderControllers.getAllOrders);
 
 export const OrderRoutes = router;

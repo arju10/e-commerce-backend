@@ -20,15 +20,22 @@ const createOrder = catchAsync(async (req: Request, res: Response) => {
 });
 
 // Get all Orders ==== API: ("/api/orders") === Method :[ GET]
-const getAllOrders = catchAsync(async (req, res) => {
-  const result = await OrderServices.getAllOrdersFromDB(req.query);
+const getAllOrders = catchAsync(async (req: Request, res: Response) => {
+  const { email, ...restQuery } = req.query;
 
-  handleNotFound(res, result, 'Order not found');
+  const result = await OrderServices.getAllOrdersFromDB({
+    email,
+    ...restQuery,
+  });
+
+  handleNotFound(res, result.result, 'Order not found');
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Orders are retrieved successfully',
+    message: email
+      ? 'Orders fetched successfully for user email!'
+      : 'Orders retrieved successfully',
     meta: result.meta,
     data: result.result,
   });

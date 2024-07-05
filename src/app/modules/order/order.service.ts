@@ -1,4 +1,5 @@
 import QueryBuilder from '../../builder/QueryBuilder';
+
 import { OrderSearchableFields } from './order.constant';
 import { TOrder } from './order.interface';
 import Order from './order.model';
@@ -11,12 +12,20 @@ const createOrderIntoDB = async (payload: TOrder) => {
 
 // Get all Orders ==== API: ("/api/orders") === Method :[ GET]
 const getAllOrdersFromDB = async (query: Record<string, unknown>) => {
-  const orderQuery = new QueryBuilder(Order.find(), query).search(
-    OrderSearchableFields,
-  );
+  const { email, ...restQuery } = query;
 
-  const result = await orderQuery.modelQuery;
-  const meta = await orderQuery.countTotal();
+  let orderQuery = Order.find();
+
+  if (email) {
+    orderQuery = orderQuery.where({ email });
+  }
+
+  const queryBuilder = new QueryBuilder(orderQuery, restQuery)
+    .search(OrderSearchableFields)
+    .filter();
+
+  const result = await queryBuilder.modelQuery;
+  const meta = await queryBuilder.countTotal();
 
   return {
     meta,

@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import { ErrorRequestHandler } from 'express';
 import { ZodError } from 'zod';
-import config from '../../config';
+import config from '../config';
 import { TErrorSources } from '../interface/error';
 import handleZodError from '../error/handleZodError';
 import handleValidationError from '../error/handleValidationError';

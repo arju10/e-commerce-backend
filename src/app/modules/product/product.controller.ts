@@ -4,7 +4,6 @@ import sendResponse from '../../utils/sendResponse';
 import { Request, Response } from 'express';
 import { ProductServices } from './product.service';
 import { TProduct } from './product.interface';
-import { logger } from '../../shared/logger';
 import { handleNotFound } from '../../utils/handleNotFound';
 
 // Create Single Product  ==== API: ("/api/products") === Method :[ POST]

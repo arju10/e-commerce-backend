@@ -15,14 +15,16 @@ app.use(express.urlencoded({ extended: true }));
 // Application routes
 app.use('/api/', routes);
 
-// Global Error Handler
-app.use(globalErrorHandler);
 
-//Not Found
-app.use(notFound);
 
 app.get('/', async (req: Request, res: Response) => {
   res.send('Working successfully');
   // console.log(x)
 });
+
+// Global Error Handler
+app.use(globalErrorHandler);
+
+//Not Found
+app.use(notFound);
 export default app;

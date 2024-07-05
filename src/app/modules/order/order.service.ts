@@ -1,4 +1,5 @@
 import QueryBuilder from '../../builder/QueryBuilder';
+import { handleInsufficientQuantity } from '../../utils/handleNotFound';
 import { Product } from '../product/product.model';
 
 import { OrderSearchableFields } from './order.constant';
@@ -17,7 +18,7 @@ const createOrderIntoDB = async (payload: TOrder) => {
     }
 
     if (product.inventory.quantity < quantity) {
-      throw new Error('Insufficient stock');
+      throw new Error('Insufficient quantity available in inventory');
     }
 
     // Create order

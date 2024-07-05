@@ -3,7 +3,10 @@ import httpStatus from 'http-status';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import { OrderServices } from './order.service';
-import { handleNotFound } from '../../utils/handleNotFound';
+import {
+  handleInsufficientQuantity,
+  handleNotFound,
+} from '../../utils/handleNotFound';
 
 // Create Order ==== API: ("/api/orders") === Method :[ POST]
 const createOrder = catchAsync(async (req: Request, res: Response) => {

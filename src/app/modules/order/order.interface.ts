@@ -5,4 +5,5 @@ export type TOrder = {
   productId: Types.ObjectId;
   price: number;
   quantity: number;
+  inStock: boolean;
 };

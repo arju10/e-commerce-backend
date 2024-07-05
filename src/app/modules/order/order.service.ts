@@ -1,4 +1,5 @@
 import QueryBuilder from '../../builder/QueryBuilder';
+import { Product } from '../product/product.model';
 
 import { OrderSearchableFields } from './order.constant';
 import { TOrder } from './order.interface';
@@ -6,8 +7,32 @@ import Order from './order.model';
 
 // Create Order ==== API: ("/api/orders") === Method :[ POST]
 const createOrderIntoDB = async (payload: TOrder) => {
-  const result = await Order.create(payload);
-  return result;
+  try {
+    // Check product availability and update inventory
+    const { productId, quantity } = payload;
+    const product = await Product.findById(productId);
+
+    if (!product) {
+      throw new Error('Product not found');
+    }
+
+    if (product.inventory.quantity < quantity) {
+      throw new Error('Insufficient stock');
+    }
+
+    // Create order
+    const result = await Order.create(payload);
+
+    // Update inventory
+    product.inventory.quantity -= quantity;
+    product.inventory.inStock = product.inventory.quantity > 0;
+
+    await product.save();
+
+    return result;
+  } catch (error) {
+    throw error;
+  }
 };
 
 // Get all Orders ==== API: ("/api/orders") === Method :[ GET]

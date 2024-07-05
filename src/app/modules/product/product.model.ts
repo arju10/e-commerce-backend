@@ -1,4 +1,4 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose, { Schema, Document, model } from 'mongoose';
 import { TInventory, TProduct, TProductVariant } from './product.interface';
 
 const inventorySchema = new Schema<TInventory>({
@@ -12,15 +12,13 @@ const variantSchema = new Schema<TProductVariant>({
 });
 
 const productSchema = new Schema<TProduct>({
-  name: { type: String, required: true },
+  name: { type: String, required: true, unique: true },
   description: { type: String, required: true },
   price: { type: Number, required: true },
   category: { type: String, required: true },
   tags: [{ type: String, required: true }],
-  variants: { type: [variantSchema], required: true },
+  variants: [{ type: variantSchema, required: true }],
   inventory: { type: inventorySchema, required: true },
 });
 
-const ProductModel = mongoose.model('Product', productSchema);
-
-export default ProductModel;
+export const Product = model<TProduct>('Product', productSchema);

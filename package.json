@@ -45,6 +45,7 @@
     "http-status": "^1.7.4",
     "mongoose": "^8.4.4",
     "winston": "^3.13.0",
-    "winston-daily-rotate-file": "^5.0.0"
+    "winston-daily-rotate-file": "^5.0.0",
+    "zod": "^3.23.8"
   }
 }

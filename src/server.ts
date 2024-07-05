@@ -1,10 +1,12 @@
 import mongoose from 'mongoose';
 import config from './config/index';
 import app from './app';
+
 import { Server } from 'http';
-import { errorlogger, logger } from './shared/logger';
+import { errorlogger, logger } from './app/shared/logger';
 
 process.on('uncaughtException', error => {
+  // console.log('Uncaught exception is detected ..............')
   errorlogger.error(error);
   process.exit(1);
 });
